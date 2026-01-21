@@ -1,0 +1,256 @@
+.landing-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    overflow-x: hidden;
+}
+
+.landing-background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(circle at 20% 50%, rgba(120, 255, 214, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 195, 113, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.landing-content-wrapper {
+    position: relative;
+    max-width: 1200px;
+    width: 100%;
+    z-index: 1;
+}
+
+/* --- Logo Section --- */
+.landing-logo-section {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: landing-fadeInDown 1s ease;
+}
+
+.landing-tea-icon {
+    display: inline-block;
+    color: #78ffd6;
+    margin-bottom: 20px;
+    animation: landing-float 3s ease-in-out infinite;
+}
+
+.landing-main-title {
+    font-size: 64px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #78ffd6 0%, #a8edea 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 15px;
+    letter-spacing: -1px;
+}
+
+.landing-tagline {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+/* --- Hero Section --- */
+.landing-hero-section {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: landing-fadeInUp 1s ease 0.2s both;
+}
+
+.landing-description {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.8;
+}
+
+/* --- CTA Buttons --- */
+.landing-cta-section {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 80px;
+    animation: landing-fadeInUp 1s ease 0.4s both;
+}
+
+.landing-cta-btn {
+    padding: 16px 48px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.landing-cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.landing-cta-btn:hover::before {
+    left: 100%;
+}
+
+.landing-primary-btn {
+    background: linear-gradient(135deg, #78ffd6 0%, #a8edea 100%);
+    color: #0f2027;
+}
+
+.landing-primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(120, 255, 214, 0.4);
+}
+
+.landing-secondary-btn {
+    background: transparent;
+    color: white;
+    border: 2px solid #78ffd6;
+}
+
+.landing-secondary-btn:hover {
+    background: rgba(120, 255, 214, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(120, 255, 214, 0.2);
+}
+
+.landing-arrow-icon {
+    transition: transform 0.3s ease;
+}
+
+.landing-cta-btn:hover .landing-arrow-icon {
+    transform: translateX(5px);
+}
+
+/* --- Features Grid --- */
+.landing-features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 20px;
+    animation: landing-fadeInUp 1s ease 0.6s both;
+}
+
+.landing-feature-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.landing-feature-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.landing-feature-icon img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.landing-feature-title {
+    font-size: 22px;
+    color: #78ffd6;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.landing-feature-text {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+}
+
+/* --- Animations --- */
+@keyframes landing-float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes landing-fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes landing-fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .landing-main-title {
+        font-size: 42px;
+    }
+
+    .landing-tagline {
+        font-size: 16px;
+    }
+
+    .landing-description {
+        font-size: 16px;
+    }
+
+    .landing-cta-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .landing-cta-btn {
+        justify-content: center;
+    }
+
+    .landing-features-grid {
+        grid-template-columns: 1fr;
+    }
+}
