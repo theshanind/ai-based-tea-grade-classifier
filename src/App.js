@@ -8,6 +8,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path='/login' element={<PlaceholderPage pageName='login'/>}/>
+        <Route path='/register' element={<PlaceholderPage pageName='Register'/>}/>
       </Routes>
     </BrowserRouter>
 
