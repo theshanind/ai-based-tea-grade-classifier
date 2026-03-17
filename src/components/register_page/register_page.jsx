@@ -1,5 +1,6 @@
 import './register_page.css';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 const RegisterPage = () => {
 
     const navigate = useNavigate();
@@ -7,9 +8,62 @@ const RegisterPage = () => {
     const handleBackToHome = () => {
         navigate('/');
     }
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        username: '',
+        password: ''
+    });
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    const [loading, setLoading] = useState(false);
+
+
     const handleBackToSignIn = () => {
         navigate('/login');
     };
+
+    // 2. Handle input changes
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    // 3. Handle form submit
+    const handleSubmit = async () => {
+        setError('');
+        setSuccess('');
+
+        // ✅ Validation check before submitting
+        if (!formData.name || !formData.email || !formData.username || !formData.password) {
+            setError('All fields are required');
+            return; // stop here, don't submit
+        }
+
+        setLoading(true);
+
+        try {
+            const response = await fetch('http://localhost:5000/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setSuccess('Account created successfully!');
+                setTimeout(() => navigate('/login'), 1500); // redirect to login after 1.5s
+            } else {
+                setError(data.message || 'Registration failed');
+            }
+
+        } catch (err) {
+            setError('Cannot connect to server');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="register-container">
             <div className="register-background-overlay"></div>
@@ -31,6 +85,11 @@ const RegisterPage = () => {
                     </div>
 
                     <div className="register-form">
+
+                        {/* 4. Show error or success messages */}
+                        {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+                        {success && <p style={{ color: 'green', textAlign: 'center' }}>{success}</p>}
+
                         <div className="register-form-group">
                             <label htmlFor="name">Name</label>
                             <div className="register-input-wrapper">
@@ -43,6 +102,8 @@ const RegisterPage = () => {
                                     name="name"
                                     placeholder="Enter your full name"
                                     className="register-input-field"
+                                    value={formData.name}
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
@@ -60,6 +121,8 @@ const RegisterPage = () => {
                                     name="email"
                                     placeholder="Enter your email"
                                     className="register-input-field"
+                                    value={formData.email}
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
@@ -76,6 +139,8 @@ const RegisterPage = () => {
                                     name="username"
                                     placeholder="Choose a username"
                                     className="register-input-field"
+                                    value={formData.username}
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
@@ -92,12 +157,14 @@ const RegisterPage = () => {
                                     name="password"
                                     placeholder="Create a password"
                                     className="register-input-field"
+                                    value={formData.password}
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
 
-                        <button className="register-submit-btn">
-                            <span>Create Account</span>
+                        <button className="register-submit-btn" onClick={handleSubmit} disabled={loading}>
+                            <span>{loading ? 'Creating...' : 'Create Account'}</span>
                             <svg className="register-arrow-icon" viewBox="0 0 24 24" width="20" height="20">
                                 <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" fill="none" />
                             </svg>

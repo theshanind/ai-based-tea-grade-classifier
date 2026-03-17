@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import PlaceholderPage from './placeholder_components.jsx';
 import LandingPage from './components/landing_page/landing_page';
 import LoginPage from './components/login_page/login_page.jsx';
 import RegisterPage from './components/register_page/register_page.jsx';
