@@ -1,10 +1,60 @@
 import './login_page.css';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 const LoginPage = () => {
     const navigate = useNavigate();
 
+    // 1. State
+    const [formData, setFormData] = useState({
+        username: '',
+        password: ''
+    });
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
     const handleBackToHome = () => {
         navigate('/');
+    };
+
+    // 2. Handle input changes
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    // 3. Handle form submit
+    const handleSubmit = async () => {
+        setError('');
+
+        // Validation
+        if (!formData.username || !formData.password) {
+            setError('All fields are required');
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const response = await fetch('http://localhost:5000/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Save user data to localStorage
+                localStorage.setItem('user', JSON.stringify(data.user));
+                navigate('/dashboard'); // ✅ redirect after login
+            } else {
+                setError(data.message || 'Login failed');
+            }
+
+        } catch (err) {
+            setError('Cannot connect to server');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -33,6 +83,10 @@ const LoginPage = () => {
                     </div>
 
                     <div className="login-form">
+
+                        {/* 4. Error message */}
+                        {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+
                         <div className="form-group">
                             <label htmlFor="username">Username</label>
                             <div className="input-wrapper">
@@ -45,6 +99,8 @@ const LoginPage = () => {
                                     name="username"
                                     placeholder="Enter your username"
                                     className="input-field"
+                                    value={formData.username}
+                                    onChange={handleChange} 
                                 />
                             </div>
                         </div>
@@ -61,12 +117,14 @@ const LoginPage = () => {
                                     name="password"
                                     placeholder="Enter your password"
                                     className="input-field"
+                                    value={formData.password}
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
 
-                        <button className="signin-btn">
-                            <span>Sign In</span>
+                        <button className="signin-btn" onClick={handleSubmit} disabled={loading}>
+                            <span>{loading ? 'Signing in...' : 'Sign In'}</span>
                             <svg className="arrow-icon" viewBox="0 0 24 24" width="20" height="20">
                                 <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" fill="none" />
                             </svg>
