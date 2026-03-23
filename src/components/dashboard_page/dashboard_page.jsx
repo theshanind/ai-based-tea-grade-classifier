@@ -1,15 +1,14 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './dashboard_page.css';
+import { useNavigate } from 'react-router-dom';
 
 const DashboardPage = () => {
-
-    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('analyze');
     const [rawTeaImage, setRawTeaImage] = useState(null);
     const [madeTeaImage, setMadeTeaImage] = useState(null);
     const [teaGrade, setTeaGrade] = useState('');
 
+    const navigate = useNavigate();
     const handleLogout = () => {
         navigate('/');
     };
@@ -141,6 +140,13 @@ const DashboardPage = () => {
                                             </label>
                                         )}
                                     </div>
+
+                                    <button className="dash-card-analyze-btn" onClick={handleAnalyze}>
+                                        <svg viewBox="0 0 24 24" width="20" height="20">
+                                            <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2" fill="none" />
+                                        </svg>
+                                        <span>Analyze Raw Tea</span>
+                                    </button>
                                 </div>
 
                                 <div className="dash-upload-card">
@@ -187,80 +193,13 @@ const DashboardPage = () => {
                                             </label>
                                         )}
                                     </div>
-                                </div>
-                            </div>
 
-                            <div className="dash-action-bar">
-                                <button className="dash-analyze-button" onClick={handleAnalyze}>
-                                    <svg viewBox="0 0 24 24" width="20" height="20">
-                                        <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2" fill="none" />
-                                    </svg>
-                                    <span>Analyze Tea Grade</span>
-                                </button>
-                            </div>
-
-                            <div className="dash-results-section">
-                                <h2 className="dash-section-title">Analysis Results</h2>
-                                <p className="dash-section-subtitle">ML model predictions will appear here after analysis</p>
-
-                                <div className="dash-results-grid">
-                                    <div className="dash-result-card">
-                                        <div className="dash-result-header">
-                                            <div>
-                                                <h3>Raw Tea Analysis</h3>
-                                                <p>Analysis from raw tea leaf image</p>
-                                            </div>
-                                            <span className="dash-badge pending">Pending</span>
-                                        </div>
-
-                                        <div className="dash-result-body">
-                                            <div className="dash-metric">
-                                                <span className="dash-metric-label">Grade</span>
-                                                <span className="dash-metric-value">-</span>
-                                            </div>
-                                            <div className="dash-metric">
-                                                <span className="dash-metric-label">Quality Score</span>
-                                                <span className="dash-metric-value">-</span>
-                                            </div>
-                                            <div className="dash-metric">
-                                                <span className="dash-metric-label">Confidence</span>
-                                                <span className="dash-metric-value">-</span>
-                                            </div>
-                                            <div className="dash-metric">
-                                                <span className="dash-metric-label">Color Index</span>
-                                                <span className="dash-metric-value">-</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="dash-result-card">
-                                        <div className="dash-result-header">
-                                            <div>
-                                                <h3>Made Tea Analysis</h3>
-                                                <p>Analysis from processed tea image</p>
-                                            </div>
-                                            <span className="dash-badge pending">Pending</span>
-                                        </div>
-
-                                        <div className="dash-result-body">
-                                            <div className="dash-metric">
-                                                <span className="dash-metric-label">Grade</span>
-                                                <span className="dash-metric-value">-</span>
-                                            </div>
-                                            <div className="dash-metric">
-                                                <span className="dash-metric-label">Quality Score</span>
-                                                <span className="dash-metric-value">-</span>
-                                            </div>
-                                            <div className="dash-metric">
-                                                <span className="dash-metric-label">Confidence</span>
-                                                <span className="dash-metric-value">-</span>
-                                            </div>
-                                            <div className="dash-metric">
-                                                <span className="dash-metric-label">Aroma Index</span>
-                                                <span className="dash-metric-value">-</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <button className="dash-card-analyze-btn" onClick={handleAnalyze}>
+                                        <svg viewBox="0 0 24 24" width="20" height="20">
+                                            <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2" fill="none" />
+                                        </svg>
+                                        <span>Analyze Made Tea</span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
