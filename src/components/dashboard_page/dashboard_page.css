@@ -33,6 +33,13 @@
      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
  }
 
+ .dash-card-analyze-btn:disabled {
+     opacity: 0.4;
+     cursor: not-allowed;
+     transform: none;
+     box-shadow: none;
+ }
+
  .dash-brand {
      font-size: 20px;
      font-weight: 700;
