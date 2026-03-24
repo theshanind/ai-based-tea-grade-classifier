@@ -60,6 +60,7 @@ const DashboardPage = () => {
         setError(null);
         setRawTeaImage(null);
         setRawTeaFile(null);
+        setMadeTeaImage(null); 
     };
 
 
@@ -126,10 +127,10 @@ const DashboardPage = () => {
                                 <h1 className="dash-page-title">Analyze Tea Grade</h1>
                                 <p className="dash-page-subtitle">Upload tea images for AI-powered grading analysis</p>
                             </div>
-
-                            {/* Upload cards — only show when no result yet */}
                             {!result && !loading && (
-                                <div className="dash-upload-container">
+                                < div className="dash-upload-container">
+
+                                    {/* Raw tea card */}
                                     <div className="dash-upload-card">
                                         <div className="dash-card-header">
                                             <div className="dash-card-icon">
@@ -149,7 +150,12 @@ const DashboardPage = () => {
                                                     <img src={rawTeaImage} alt="Raw tea" />
                                                     <button
                                                         className="dash-remove"
-                                                        onClick={handleReset}
+                                                        onClick={() => {
+                                                            setRawTeaImage(null);
+                                                            setRawTeaFile(null);
+                                                            setResult(null);
+                                                            setError(null);
+                                                        }}
                                                     >
                                                         <svg viewBox="0 0 24 24" width="20" height="20">
                                                             <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" fill="none" />
@@ -178,18 +184,74 @@ const DashboardPage = () => {
                                         <button
                                             className="dash-card-analyze-btn"
                                             onClick={handleAnalyze}
-                                            disabled={!rawTeaFile}
+                                            disabled={!rawTeaFile || loading}
                                         >
                                             <svg viewBox="0 0 24 24" width="20" height="20">
                                                 <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2" fill="none" />
                                             </svg>
-                                            <span>Analyze Raw Tea</span>
+                                            <span>
+                                                {loading ? 'Analyzing...' : 'Analyze Raw Tea'}
+                                            </span>
                                         </button>
                                     </div>
-                                </div>
-                            )}
 
-                            {/* ── Result panel appears here after analysis ── */}
+                                    {/* Made tea card — completely unchanged */}
+                                    <div className="dash-upload-card">
+                                        <div className="dash-card-header">
+                                            <div className="dash-card-icon">
+                                                <svg viewBox="0 0 24 24" width="24" height="24">
+                                                    <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3" stroke="currentColor" strokeWidth="2" fill="none" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h3>Made Tea</h3>
+                                                <p>Upload image of processed tea</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="dash-upload-area">
+                                            {madeTeaImage ? (
+                                                <div className="dash-preview">
+                                                    <img src={madeTeaImage} alt="Made tea" />
+                                                    <button
+                                                        className="dash-remove"
+                                                        onClick={() => setMadeTeaImage(null)}
+                                                    >
+                                                        <svg viewBox="0 0 24 24" width="20" height="20">
+                                                            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" fill="none" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            ) : (
+                                                <label className="dash-upload-label">
+                                                    <input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        onChange={handleMadeTeaUpload}
+                                                        className="dash-file-input"
+                                                    />
+                                                    <div className="dash-upload-icon">
+                                                        <svg viewBox="0 0 24 24" width="48" height="48">
+                                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" strokeWidth="2" fill="none" />
+                                                        </svg>
+                                                    </div>
+                                                    <p className="dash-upload-text">Click to upload or drag and drop</p>
+                                                    <span className="dash-upload-hint">PNG, JPG up to 10MB</span>
+                                                </label>
+                                            )}
+                                        </div>
+
+                                        <button className="dash-card-analyze-btn">
+                                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                                <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2" fill="none" />
+                                            </svg>
+                                            <span>Analyze Made Tea</span>
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            )}
                             <ModelResult
                                 result={result}
                                 loading={loading}
@@ -271,7 +333,7 @@ const DashboardPage = () => {
                     )}
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 export default DashboardPage;
