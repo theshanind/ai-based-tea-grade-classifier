@@ -3,17 +3,25 @@ import './dashboard_page.css';
 import { useNavigate } from 'react-router-dom';
 import ModelResult from '../yolo_model/ModelResult';        // ← add
 import { predictImage } from '../yolo_model/predictApi';
+import ClassifyResult from '../cls_model/Classifyresult';
+import { classifyImage } from '../cls_model/clspredictApi';
 
 const DashboardPage = () => {
     const [activeTab, setActiveTab] = useState('analyze');
-    const [rawTeaImage, setRawTeaImage] = useState(null);
-    const [madeTeaImage, setMadeTeaImage] = useState(null);
     const [teaGrade, setTeaGrade] = useState('');
 
+    const [rawTeaImage, setRawTeaImage] = useState(null);
     const [rawTeaFile, setRawTeaFile] = useState(null);     // ← add new
     const [result, setResult] = useState(null);     // ← add new
     const [loading, setLoading] = useState(false);    // ← add new
     const [error, setError] = useState(null);
+
+    const [madeTeaImage, setMadeTeaImage] = useState(null);
+    const [madeTeaFile, setMadeTeaFile] = useState(null);
+    const [clsResult, setClsResult] = useState(null);
+    const [clsLoading, setClsLoading] = useState(false);
+    const [clsError, setClsError] = useState(null);
+
 
     const navigate = useNavigate();
     const handleLogout = () => {
@@ -27,12 +35,6 @@ const DashboardPage = () => {
             setRawTeaFile(file);    // ← add: save the File for the API call
             setResult(null);        // ← add: clear old result when new image picked
             setError(null);
-        }
-    };
-    const handleMadeTeaUpload = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setMadeTeaImage(URL.createObjectURL(file));
         }
     };
 
@@ -60,9 +62,40 @@ const DashboardPage = () => {
         setError(null);
         setRawTeaImage(null);
         setRawTeaFile(null);
-        setMadeTeaImage(null); 
+        setMadeTeaImage(null);
     };
 
+    const handleMadeTeaUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setMadeTeaImage(URL.createObjectURL(file));
+            setMadeTeaFile(file);
+            setClsResult(null);   // clear old result when new image picked
+            setClsError(null);
+        }
+    };
+
+    const handleClassify = async () => {
+        if (!madeTeaFile) { alert('Please upload a made tea image first.'); return; }
+        setClsLoading(true);
+        setClsError(null);
+        setClsResult(null);
+        try {
+            const data = await classifyImage(madeTeaFile);
+            setClsResult(data);
+        } catch (err) {
+            setClsError(err.message);
+        } finally {
+            setClsLoading(false);
+        }
+    };
+
+    const handleClsReset = () => {
+        setClsResult(null);
+        setClsError(null);
+        setMadeTeaImage(null);
+        setMadeTeaFile(null);
+    };
 
     const handleCheckPrice = () => {
         console.log('Check price for grade:', teaGrade);
@@ -127,10 +160,12 @@ const DashboardPage = () => {
                                 <h1 className="dash-page-title">Analyze Tea Grade</h1>
                                 <p className="dash-page-subtitle">Upload tea images for AI-powered grading analysis</p>
                             </div>
-                            {!result && !loading && (
-                                < div className="dash-upload-container">
 
-                                    {/* Raw tea card */}
+                            {/* ── Upload cards — hidden once EITHER model has a result ── */}
+                            {!result && !clsResult && !loading && !clsLoading && (
+                                <div className="dash-upload-container">
+
+                                    {/* ── Card 1: Raw Tea → YOLO (unchanged) ── */}
                                     <div className="dash-upload-card">
                                         <div className="dash-card-header">
                                             <div className="dash-card-icon">
@@ -164,12 +199,7 @@ const DashboardPage = () => {
                                                 </div>
                                             ) : (
                                                 <label className="dash-upload-label">
-                                                    <input
-                                                        type="file"
-                                                        accept="image/*"
-                                                        onChange={handleRawTeaUpload}
-                                                        className="dash-file-input"
-                                                    />
+                                                    <input type="file" accept="image/*" onChange={handleRawTeaUpload} className="dash-file-input" />
                                                     <div className="dash-upload-icon">
                                                         <svg viewBox="0 0 24 24" width="48" height="48">
                                                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" strokeWidth="2" fill="none" />
@@ -189,13 +219,11 @@ const DashboardPage = () => {
                                             <svg viewBox="0 0 24 24" width="20" height="20">
                                                 <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2" fill="none" />
                                             </svg>
-                                            <span>
-                                                {loading ? 'Analyzing...' : 'Analyze Raw Tea'}
-                                            </span>
+                                            <span>{loading ? 'Analyzing...' : 'Analyze Raw Tea'}</span>
                                         </button>
                                     </div>
 
-                                    {/* Made tea card — completely unchanged */}
+                                    {/* ── Card 2: Made Tea → Classification (wired up) ── */}
                                     <div className="dash-upload-card">
                                         <div className="dash-card-header">
                                             <div className="dash-card-icon">
@@ -205,7 +233,7 @@ const DashboardPage = () => {
                                             </div>
                                             <div>
                                                 <h3>Made Tea</h3>
-                                                <p>Upload image of processed tea</p>
+                                                <p>Upload image of processed/dried tea</p>
                                             </div>
                                         </div>
 
@@ -215,7 +243,12 @@ const DashboardPage = () => {
                                                     <img src={madeTeaImage} alt="Made tea" />
                                                     <button
                                                         className="dash-remove"
-                                                        onClick={() => setMadeTeaImage(null)}
+                                                        onClick={() => {
+                                                            setMadeTeaImage(null);
+                                                            setMadeTeaFile(null);
+                                                            setClsResult(null);
+                                                            setClsError(null);
+                                                        }}
                                                     >
                                                         <svg viewBox="0 0 24 24" width="20" height="20">
                                                             <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" fill="none" />
@@ -224,12 +257,7 @@ const DashboardPage = () => {
                                                 </div>
                                             ) : (
                                                 <label className="dash-upload-label">
-                                                    <input
-                                                        type="file"
-                                                        accept="image/*"
-                                                        onChange={handleMadeTeaUpload}
-                                                        className="dash-file-input"
-                                                    />
+                                                    <input type="file" accept="image/*" onChange={handleMadeTeaUpload} className="dash-file-input" />
                                                     <div className="dash-upload-icon">
                                                         <svg viewBox="0 0 24 24" width="48" height="48">
                                                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" strokeWidth="2" fill="none" />
@@ -241,23 +269,43 @@ const DashboardPage = () => {
                                             )}
                                         </div>
 
-                                        <button className="dash-card-analyze-btn">
+                                        {clsError && (
+                                            <p className="dash-cls-error">{clsError}</p>
+                                        )}
+
+                                        <button
+                                            className="dash-card-analyze-btn"
+                                            onClick={handleClassify}
+                                            disabled={!madeTeaFile || clsLoading}
+                                        >
                                             <svg viewBox="0 0 24 24" width="20" height="20">
                                                 <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2" fill="none" />
                                             </svg>
-                                            <span>Analyze Made Tea</span>
+                                            <span>{clsLoading ? 'Classifying...' : 'Classify Made Tea'}</span>
                                         </button>
                                     </div>
 
                                 </div>
-
                             )}
+
+                            {/* ── YOLO result (shows when raw tea analyzed) ── */}
                             <ModelResult
                                 result={result}
                                 loading={loading}
                                 error={error}
                                 onReset={handleReset}
                             />
+
+                            {/* ── Classification result (shows when made tea classified) ── */}
+                            {clsResult && (
+                                <div className="dash-cls-result-wrap">
+                                    <ClassifyResult
+                                        result={clsResult}
+                                        onReset={handleClsReset}
+                                    />
+                                </div>
+                            )}
+
                         </div>
                     )}
 
@@ -267,7 +315,6 @@ const DashboardPage = () => {
                                 <h1 className="dash-page-title">Check Auction Price</h1>
                                 <p className="dash-page-subtitle">Get current market prices for tea grades</p>
                             </div>
-
                             <div className="dash-price-container">
                                 <div className="dash-price-card">
                                     <div className="dash-price-input-section">
@@ -288,9 +335,7 @@ const DashboardPage = () => {
                                             </button>
                                         </div>
                                     </div>
-
                                     <div className="dash-price-divider"></div>
-
                                     <div className="dash-price-result-section">
                                         <div className="dash-price-item">
                                             <span className="dash-price-label">Current Auction Price</span>
@@ -316,7 +361,6 @@ const DashboardPage = () => {
                                 <h1 className="dash-page-title">Analysis History</h1>
                                 <p className="dash-page-subtitle">View your past tea grading analyses</p>
                             </div>
-
                             <div className="dash-history-container">
                                 <div className="dash-empty-state">
                                     <svg viewBox="0 0 24 24" width="80" height="80">
@@ -333,7 +377,7 @@ const DashboardPage = () => {
                     )}
                 </div>
             </div>
-        </div >
+        </div>
     )
 }
 export default DashboardPage;
