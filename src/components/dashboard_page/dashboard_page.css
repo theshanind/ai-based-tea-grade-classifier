@@ -1195,3 +1195,310 @@
          grid-template-columns: 1fr;
      }
  }
+
+ .dash-grade-chips {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 8px;
+     margin-top: 14px;
+ }
+
+ .dash-grade-chip {
+     padding: 5px 14px;
+     border-radius: 20px;
+     border: 1px solid rgba(255, 255, 255, 0.15);
+     background: rgba(255, 255, 255, 0.05);
+     color: rgba(255, 255, 255, 0.6);
+     font-size: 12px;
+     font-weight: 600;
+     cursor: pointer;
+     transition: all 0.2s ease;
+ }
+
+ .dash-grade-chip:hover {
+     border-color: rgba(120, 255, 214, 0.4);
+     color: #78ffd6;
+     background: rgba(120, 255, 214, 0.08);
+ }
+
+ .dash-grade-chip.active {
+     border-color: #78ffd6;
+     color: #78ffd6;
+     background: rgba(120, 255, 214, 0.12);
+ }
+
+ /* Error message */
+ .dash-price-error {
+     display: flex;
+     align-items: center;
+     gap: 8px;
+     margin-top: 16px;
+     padding: 12px 16px;
+     background: rgba(255, 107, 107, 0.1);
+     border: 1px solid rgba(255, 107, 107, 0.25);
+     border-radius: 10px;
+     color: #ff6b6b;
+     font-size: 14px;
+ }
+
+ /* Predict button spinner */
+ .dash-price-spinner {
+     width: 16px;
+     height: 16px;
+     border: 2px solid rgba(15, 32, 39, 0.3);
+     border-top-color: #0f2027;
+     border-radius: 50%;
+     animation: dashPriceSpin 0.7s linear infinite;
+     flex-shrink: 0;
+ }
+
+ @keyframes dashPriceSpin {
+     to {
+         transform: rotate(360deg);
+     }
+ }
+
+ /* Loading skeleton rows */
+ .dash-price-skeleton {
+     margin-top: 4px;
+ }
+
+ .dash-skeleton-row {
+     height: 16px;
+     border-radius: 8px;
+     background: linear-gradient(90deg,
+             rgba(255, 255, 255, 0.06) 25%,
+             rgba(255, 255, 255, 0.12) 50%,
+             rgba(255, 255, 255, 0.06) 75%);
+     background-size: 200% 100%;
+     animation: dashSkeletonShimmer 1.4s infinite;
+     margin-bottom: 14px;
+ }
+
+ .dash-skeleton-wide {
+     width: 100%;
+ }
+
+ .dash-skeleton-medium {
+     width: 70%;
+ }
+
+ .dash-skeleton-narrow {
+     width: 45%;
+ }
+
+ @keyframes dashSkeletonShimmer {
+     0% {
+         background-position: 200% 0;
+     }
+
+     100% {
+         background-position: -200% 0;
+     }
+ }
+
+ /* Result header row */
+ .dash-price-result-header {
+     display: flex;
+     align-items: flex-start;
+     justify-content: space-between;
+     gap: 16px;
+     margin-bottom: 20px;
+ }
+
+ .dash-price-grade-name {
+     font-size: 32px;
+     font-weight: 900;
+     background: linear-gradient(135deg, #78ffd6, #a8edea);
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+     background-clip: text;
+     letter-spacing: -0.5px;
+     line-height: 1;
+ }
+
+ .dash-price-grade-info {
+     font-size: 13px;
+     color: rgba(255, 255, 255, 0.5);
+     margin-top: 6px;
+ }
+
+ .dash-price-badges {
+     display: flex;
+     flex-direction: column;
+     gap: 6px;
+     align-items: flex-end;
+ }
+
+ .dash-price-badge {
+     font-size: 12px;
+     font-weight: 700;
+     padding: 4px 12px;
+     border-radius: 20px;
+     background: rgba(255, 255, 255, 0.06);
+     border: 1px solid rgba(255, 255, 255, 0.1);
+     white-space: nowrap;
+ }
+
+ /* Main price display block */
+ .dash-price-main {
+     background: rgba(120, 255, 214, 0.05);
+     border: 1px solid rgba(120, 255, 214, 0.15);
+     border-radius: 16px;
+     padding: 22px 24px;
+     margin-bottom: 20px;
+ }
+
+ .dash-price-lkr {
+     display: flex;
+     align-items: baseline;
+     gap: 8px;
+     flex-wrap: wrap;
+     margin-bottom: 6px;
+ }
+
+ .dash-price-currency {
+     font-size: 16px;
+     font-weight: 700;
+     color: rgba(120, 255, 214, 0.7);
+ }
+
+ .dash-price-amount {
+     font-size: 36px;
+     font-weight: 900;
+     color: #fff;
+     letter-spacing: -1px;
+     line-height: 1;
+ }
+
+ .dash-price-sep {
+     font-weight: 400;
+     color: rgba(255, 255, 255, 0.4);
+ }
+
+ .dash-price-unit {
+     font-size: 13px;
+     color: rgba(255, 255, 255, 0.4);
+ }
+
+ .dash-price-usd {
+     font-size: 13px;
+     color: rgba(255, 255, 255, 0.5);
+     margin-bottom: 8px;
+ }
+
+ .dash-price-avg {
+     font-size: 14px;
+     color: rgba(255, 255, 255, 0.6);
+ }
+
+ .dash-price-avg strong {
+     color: #78ffd6;
+ }
+
+ /* Analysis / Recommendation sections */
+ .dash-price-section {
+     background: rgba(255, 255, 255, 0.03);
+     border: 1px solid rgba(255, 255, 255, 0.08);
+     border-radius: 12px;
+     padding: 16px 18px;
+     margin-bottom: 12px;
+ }
+
+ .dash-price-section--highlight {
+     background: rgba(120, 255, 214, 0.04);
+     border-color: rgba(120, 255, 214, 0.12);
+ }
+
+ .dash-price-section-title {
+     display: flex;
+     align-items: center;
+     gap: 7px;
+     font-size: 11px;
+     font-weight: 700;
+     text-transform: uppercase;
+     letter-spacing: 0.8px;
+     color: rgba(255, 255, 255, 0.45);
+     margin-bottom: 10px;
+ }
+
+ .dash-price-section--highlight .dash-price-section-title {
+     color: rgba(120, 255, 214, 0.6);
+ }
+
+ .dash-price-section-text {
+     font-size: 14px;
+     color: rgba(255, 255, 255, 0.75);
+     line-height: 1.6;
+     margin: 0;
+ }
+
+ /* Last auction note */
+ .dash-price-auction-note {
+     display: flex;
+     align-items: flex-start;
+     gap: 8px;
+     font-size: 13px;
+     color: rgba(255, 255, 255, 0.45);
+     padding: 12px 16px;
+     background: rgba(255, 255, 255, 0.02);
+     border-radius: 10px;
+     margin-bottom: 16px;
+     line-height: 1.5;
+ }
+
+ /* Footer: disclaimer + reset button */
+ .dash-price-footer {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     gap: 16px;
+     flex-wrap: wrap;
+     padding-top: 4px;
+ }
+
+ .dash-price-disclaimer {
+     font-size: 11px;
+     color: rgba(255, 255, 255, 0.3);
+ }
+
+ .dash-price-reset-btn {
+     padding: 8px 18px;
+     border-radius: 8px;
+     border: 1px solid rgba(255, 255, 255, 0.15);
+     background: rgba(255, 255, 255, 0.05);
+     color: rgba(255, 255, 255, 0.6);
+     font-size: 13px;
+     cursor: pointer;
+     transition: all 0.2s ease;
+     white-space: nowrap;
+ }
+
+ .dash-price-reset-btn:hover {
+     background: rgba(255, 255, 255, 0.1);
+     color: #fff;
+ }
+
+ /* Empty state (before any search) */
+ .dash-price-empty {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     gap: 12px;
+     padding: 50px 20px;
+     text-align: center;
+     color: rgba(255, 255, 255, 0.4);
+     font-size: 15px;
+ }
+
+ .dash-price-empty strong {
+     color: rgba(120, 255, 214, 0.7);
+ }
+
+ .dash-price-empty-sub {
+     font-size: 12px;
+     color: rgba(255, 255, 255, 0.25);
+     max-width: 380px;
+     line-height: 1.5;
+ }
