@@ -605,24 +605,593 @@
          justify-content: center;
      }
  }
-  
-.dash-cls-result-wrap {
-    margin-top: 24px;
-    animation: dashClsFadeIn 0.4s ease;
-}
- 
-@keyframes dashClsFadeIn {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
- 
-.dash-cls-error {
-    color: #ff6b6b;
-    font-size: 13px;
-    background: rgba(255, 107, 107, 0.1);
-    border: 1px solid rgba(255, 107, 107, 0.2);
-    border-radius: 8px;
-    padding: 8px 12px;
-    margin: 0 0 8px 0;
-    text-align: center;
-}
+
+ .dash-cls-result-wrap {
+     margin-top: 24px;
+     animation: dashClsFadeIn 0.4s ease;
+ }
+
+ @keyframes dashClsFadeIn {
+     from {
+         opacity: 0;
+         transform: translateY(12px);
+     }
+
+     to {
+         opacity: 1;
+         transform: translateY(0);
+     }
+ }
+
+ .dash-cls-error {
+     color: #ff6b6b;
+     font-size: 13px;
+     background: rgba(255, 107, 107, 0.1);
+     border: 1px solid rgba(255, 107, 107, 0.2);
+     border-radius: 8px;
+     padding: 8px 12px;
+     margin: 0 0 8px 0;
+     text-align: center;
+ }
+
+ .dash-user-info {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     margin-top: 18px;
+     padding: 12px 14px;
+     background: rgba(120, 255, 214, 0.07);
+     border: 1px solid rgba(120, 255, 214, 0.15);
+     border-radius: 12px;
+ }
+
+ .dash-user-avatar {
+     width: 36px;
+     height: 36px;
+     border-radius: 50%;
+     background: linear-gradient(135deg, #78ffd6, #a8edea);
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-weight: 800;
+     font-size: 15px;
+     color: #0f2027;
+     flex-shrink: 0;
+ }
+
+ .dash-user-details {
+     display: flex;
+     flex-direction: column;
+     min-width: 0;
+ }
+
+ .dash-user-name {
+     font-size: 13px;
+     font-weight: 700;
+     color: #fff;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+ }
+
+ .dash-user-username {
+     font-size: 11px;
+     color: rgba(255, 255, 255, 0.45);
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+ }
+
+ /* ── Nav badge (record count on History nav item) ──────────────────────── */
+ .dash-nav-badge {
+     margin-left: auto;
+     background: rgba(120, 255, 214, 0.2);
+     color: #78ffd6;
+     font-size: 10px;
+     font-weight: 700;
+     padding: 2px 8px;
+     border-radius: 10px;
+     min-width: 20px;
+     text-align: center;
+ }
+
+ /* ── History toolbar ────────────────────────────────────────────────────── */
+ .dash-history-toolbar {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     margin-bottom: 20px;
+ }
+
+ .dash-history-count {
+     font-size: 13px;
+     color: rgba(255, 255, 255, 0.45);
+ }
+
+ .dash-history-refresh-btn {
+     display: flex;
+     align-items: center;
+     gap: 6px;
+     padding: 7px 14px;
+     border-radius: 8px;
+     border: 1px solid rgba(255, 255, 255, 0.12);
+     background: rgba(255, 255, 255, 0.05);
+     color: rgba(255, 255, 255, 0.6);
+     font-size: 12px;
+     cursor: pointer;
+     transition: all 0.2s ease;
+ }
+
+ .dash-history-refresh-btn:hover {
+     background: rgba(255, 255, 255, 0.1);
+     color: #fff;
+ }
+
+ /* ── History grid ───────────────────────────────────────────────────────── */
+ .dash-history-grid {
+     display: grid;
+     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+     gap: 16px;
+ }
+
+ /* ── History card ───────────────────────────────────────────────────────── */
+ .dash-history-card {
+     background: rgba(255, 255, 255, 0.05);
+     backdrop-filter: blur(10px);
+     border: 1px solid rgba(255, 255, 255, 0.1);
+     border-radius: 16px;
+     padding: 16px;
+     cursor: pointer;
+     transition: all 0.25s ease;
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+ }
+
+ .dash-history-card:hover {
+     background: rgba(255, 255, 255, 0.09);
+     border-color: rgba(120, 255, 214, 0.35);
+     transform: translateY(-3px);
+     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+ }
+
+ .dash-history-card-top {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+ }
+
+ .dash-history-card-badge {
+     font-size: 11px;
+     font-weight: 600;
+     padding: 3px 10px;
+     border-radius: 20px;
+     background: rgba(120, 255, 214, 0.12);
+     color: #78ffd6;
+ }
+
+ .dash-history-card-badge[data-type="yolo"] {
+     background: rgba(168, 237, 234, 0.12);
+     color: #a8edea;
+ }
+
+ .dash-history-card-delete {
+     width: 26px;
+     height: 26px;
+     border-radius: 6px;
+     border: none;
+     background: transparent;
+     color: rgba(255, 255, 255, 0.3);
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     cursor: pointer;
+     transition: all 0.15s;
+     font-size: 12px;
+ }
+
+ .dash-history-card-delete:hover {
+     background: rgba(255, 107, 107, 0.15);
+     color: #ff6b6b;
+ }
+
+ .dash-history-card-body {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+ }
+
+ .dash-history-card-grade {
+     font-size: 22px;
+     font-weight: 800;
+     color: #fff;
+     letter-spacing: -0.5px;
+ }
+
+ .dash-history-card-conf {
+     font-size: 14px;
+     font-weight: 700;
+     background: linear-gradient(135deg, #78ffd6, #a8edea);
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+     background-clip: text;
+ }
+
+ .dash-history-card-tier {
+     font-size: 11px;
+     color: rgba(255, 255, 255, 0.45);
+     background: rgba(255, 255, 255, 0.05);
+     padding: 2px 8px;
+     border-radius: 4px;
+     width: fit-content;
+ }
+
+ .dash-history-card-date {
+     font-size: 11px;
+     color: rgba(255, 255, 255, 0.3);
+ }
+
+ .dash-history-card-cta {
+     font-size: 12px;
+     color: rgba(120, 255, 214, 0.55);
+     font-weight: 500;
+ }
+
+ /* ── Loading spinner ────────────────────────────────────────────────────── */
+ .dash-history-loading {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     gap: 14px;
+     padding: 80px 0;
+     color: rgba(255, 255, 255, 0.45);
+     font-size: 15px;
+ }
+
+ .dash-history-spinner {
+     width: 24px;
+     height: 24px;
+     border: 2px solid rgba(120, 255, 214, 0.2);
+     border-top-color: #78ffd6;
+     border-radius: 50%;
+     animation: dashSpinHistory 0.8s linear infinite;
+ }
+
+ @keyframes dashSpinHistory {
+     to {
+         transform: rotate(360deg);
+     }
+ }
+
+ /* ═══════════════════════════════════════════════════════════════════════════
+   HISTORY DETAIL MODAL
+   ═══════════════════════════════════════════════════════════════════════════ */
+ .dash-history-modal-overlay {
+     position: fixed;
+     inset: 0;
+     background: rgba(0, 0, 0, 0.75);
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     z-index: 1000;
+     padding: 20px;
+     backdrop-filter: blur(6px);
+     animation: dashModalFadeIn 0.18s ease;
+ }
+
+ @keyframes dashModalFadeIn {
+     from {
+         opacity: 0;
+     }
+
+     to {
+         opacity: 1;
+     }
+ }
+
+ .dash-history-modal {
+     background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+     border: 1px solid rgba(255, 255, 255, 0.12);
+     border-radius: 20px;
+     padding: 32px;
+     max-width: 840px;
+     width: 100%;
+     position: relative;
+     max-height: 90vh;
+     overflow-y: auto;
+     animation: dashModalSlideUp 0.2s ease;
+ }
+
+ @keyframes dashModalSlideUp {
+     from {
+         opacity: 0;
+         transform: translateY(20px);
+     }
+
+     to {
+         opacity: 1;
+         transform: translateY(0);
+     }
+ }
+
+ .dash-history-modal::-webkit-scrollbar {
+     width: 6px;
+ }
+
+ .dash-history-modal::-webkit-scrollbar-track {
+     background: transparent;
+ }
+
+ .dash-history-modal::-webkit-scrollbar-thumb {
+     background: rgba(255, 255, 255, 0.1);
+     border-radius: 3px;
+ }
+
+ .dash-history-modal-close {
+     position: absolute;
+     top: 20px;
+     right: 20px;
+     width: 34px;
+     height: 34px;
+     border-radius: 50%;
+     border: 1px solid rgba(255, 255, 255, 0.15);
+     background: rgba(255, 255, 255, 0.08);
+     color: rgba(255, 255, 255, 0.7);
+     font-size: 14px;
+     cursor: pointer;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     transition: all 0.2s ease;
+ }
+
+ .dash-history-modal-close:hover {
+     background: rgba(255, 107, 107, 0.2);
+     border-color: rgba(255, 107, 107, 0.35);
+     color: #ff6b6b;
+ }
+
+ .dash-history-modal-header {
+     display: flex;
+     align-items: center;
+     gap: 14px;
+     margin-bottom: 24px;
+     padding-right: 44px;
+ }
+
+ .dash-history-modal-type-badge {
+     font-size: 13px;
+     font-weight: 600;
+     padding: 6px 16px;
+     border-radius: 20px;
+     background: rgba(120, 255, 214, 0.12);
+     color: #78ffd6;
+     border: 1px solid rgba(120, 255, 214, 0.2);
+ }
+
+ .dash-history-modal-type-badge[data-type="yolo"] {
+     background: rgba(168, 237, 234, 0.1);
+     color: #a8edea;
+     border-color: rgba(168, 237, 234, 0.2);
+ }
+
+ .dash-history-modal-date {
+     font-size: 12px;
+     color: rgba(255, 255, 255, 0.35);
+     margin-left: auto;
+ }
+
+ .dash-history-modal-images {
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     gap: 16px;
+     margin-bottom: 22px;
+ }
+
+ .dash-history-img-block {
+     display: flex;
+     flex-direction: column;
+     gap: 8px;
+ }
+
+ .dash-history-img-label {
+     font-size: 12px;
+     color: rgba(255, 255, 255, 0.45);
+     margin: 0;
+     font-weight: 500;
+ }
+
+ .dash-history-modal-img {
+     width: 100%;
+     border-radius: 12px;
+     object-fit: cover;
+     max-height: 260px;
+     border: 1px solid rgba(255, 255, 255, 0.08);
+ }
+
+ .dash-history-modal-result {
+     display: flex;
+     align-items: center;
+     flex-wrap: wrap;
+     gap: 12px;
+     padding: 18px 20px;
+     background: rgba(255, 255, 255, 0.04);
+     border: 1px solid rgba(255, 255, 255, 0.08);
+     border-radius: 14px;
+     margin-bottom: 20px;
+ }
+
+ .dash-history-modal-grade {
+     font-size: 28px;
+     font-weight: 900;
+     background: linear-gradient(135deg, #78ffd6, #a8edea);
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+     background-clip: text;
+     letter-spacing: -0.5px;
+ }
+
+ .dash-history-modal-conf {
+     background: rgba(120, 255, 214, 0.12);
+     color: #78ffd6;
+     padding: 5px 14px;
+     border-radius: 20px;
+     font-size: 13px;
+     font-weight: 600;
+     border: 1px solid rgba(120, 255, 214, 0.2);
+ }
+
+ .dash-history-modal-tier {
+     background: rgba(255, 255, 255, 0.07);
+     color: rgba(255, 255, 255, 0.65);
+     padding: 5px 14px;
+     border-radius: 20px;
+     font-size: 13px;
+     border: 1px solid rgba(255, 255, 255, 0.1);
+ }
+
+ .dash-history-modal-extra {
+     display: flex;
+     flex-direction: column;
+     gap: 16px;
+ }
+
+ .dash-history-modal-extra-title {
+     font-size: 11px;
+     font-weight: 700;
+     color: rgba(255, 255, 255, 0.4);
+     text-transform: uppercase;
+     letter-spacing: 1px;
+     margin: 0 0 12px;
+ }
+
+ .dash-history-modal-top3 {
+     background: rgba(255, 255, 255, 0.04);
+     border: 1px solid rgba(255, 255, 255, 0.08);
+     border-radius: 14px;
+     padding: 18px;
+ }
+
+ .dash-history-top3-row {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     margin-bottom: 10px;
+ }
+
+ .dash-history-top3-row:last-child {
+     margin-bottom: 0;
+ }
+
+ .dash-history-top3-rank {
+     font-size: 11px;
+     color: rgba(255, 255, 255, 0.3);
+     width: 22px;
+     flex-shrink: 0;
+ }
+
+ .dash-history-top3-grade {
+     font-size: 13px;
+     font-weight: 700;
+     color: #fff;
+     width: 72px;
+     flex-shrink: 0;
+ }
+
+ .dash-history-top3-bar-wrap {
+     flex: 1;
+     height: 6px;
+     background: rgba(255, 255, 255, 0.07);
+     border-radius: 3px;
+     overflow: hidden;
+ }
+
+ .dash-history-top3-bar {
+     height: 100%;
+     background: linear-gradient(90deg, #78ffd6, #a8edea);
+     border-radius: 3px;
+     transition: width 0.5s ease;
+ }
+
+ .dash-history-top3-conf {
+     font-size: 12px;
+     color: #78ffd6;
+     font-weight: 600;
+     width: 40px;
+     text-align: right;
+     flex-shrink: 0;
+ }
+
+ .dash-history-modal-summary {
+     background: rgba(255, 255, 255, 0.04);
+     border: 1px solid rgba(255, 255, 255, 0.08);
+     border-radius: 14px;
+     padding: 18px;
+ }
+
+ .dash-history-summary-grid {
+     display: grid;
+     grid-template-columns: repeat(3, 1fr);
+     gap: 12px;
+     margin-bottom: 14px;
+ }
+
+ .dash-history-summary-item {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     gap: 4px;
+     padding: 14px 10px;
+     background: rgba(255, 255, 255, 0.04);
+     border-radius: 10px;
+     text-align: center;
+ }
+
+ .dash-history-summary-item span {
+     font-size: 11px;
+     color: rgba(255, 255, 255, 0.45);
+ }
+
+ .dash-history-summary-item strong {
+     font-size: 26px;
+     font-weight: 800;
+     color: #fff;
+ }
+
+ .dash-history-modal-rec {
+     font-size: 13px;
+     color: rgba(255, 255, 255, 0.55);
+     margin: 0;
+     padding: 12px 0 0;
+     border-top: 1px solid rgba(255, 255, 255, 0.07);
+ }
+
+ .dash-history-modal-brew {
+     font-size: 13px;
+     color: rgba(255, 255, 255, 0.55);
+     background: rgba(255, 255, 255, 0.04);
+     border: 1px solid rgba(255, 255, 255, 0.08);
+     border-radius: 10px;
+     padding: 14px 18px;
+     margin: 0;
+ }
+
+ .dash-history-modal-loading {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     gap: 14px;
+     padding: 60px 0;
+     color: rgba(255, 255, 255, 0.45);
+     font-size: 14px;
+ }
+
+ @media (max-width: 768px) {
+     .dash-history-modal-images {
+         grid-template-columns: 1fr;
+     }
+
+     .dash-history-grid {
+         grid-template-columns: 1fr;
+     }
+ }

@@ -44,7 +44,7 @@ const LoginPage = () => {
 
             if (response.ok) {
                 // Save user data to localStorage
-                localStorage.setItem('user', JSON.stringify(data.user));
+                localStorage.setItem('teaUser', JSON.stringify(data.user));
                 navigate('/dashboard'); // ✅ redirect after login
             } else {
                 setError(data.message || 'Login failed');
