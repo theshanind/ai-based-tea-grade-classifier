@@ -15,6 +15,9 @@ const LoginPage = () => {
     const handleBackToHome = () => {
         navigate('/');
     };
+    const handleGoToRegister = () => {
+        navigate('/register');
+    };
 
     // 2. Handle input changes
     const handleChange = (e) => {
@@ -100,7 +103,7 @@ const LoginPage = () => {
                                     placeholder="Enter your username"
                                     className="input-field"
                                     value={formData.username}
-                                    onChange={handleChange} 
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
@@ -136,7 +139,9 @@ const LoginPage = () => {
 
                         <div className="register-link">
                             <p>Don't have an account?</p>
-                            <button className="register-btn">Create an account</button>
+                            <button className="register-btn" onClick={handleGoToRegister}>
+                                Create an account
+                            </button>
                         </div>
                     </div>
                 </div>
