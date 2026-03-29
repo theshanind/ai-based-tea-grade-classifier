@@ -33,6 +33,18 @@ export default function Summary({ summary }) {
                         {summary.total_shoots}
                     </div>
                 </div>
+                {summary.producible_grades && summary.producible_grades.length > 0 && (
+                    <div className="summary__grades">
+                        <div className="summary__grades-label">Producible tea grades</div>
+                        <div className="summary__grades-list">
+                            {summary.producible_grades.map((grade, i) => (
+                                <span key={i} className="summary__grade-badge">
+                                    {grade}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
             </div>
             <div className="summary__recommendation">
